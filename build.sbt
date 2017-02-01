@@ -14,6 +14,8 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
+  "org.immutables" % "value" % "2.4.2" % "provided",
+  "com.squareup.retrofit2" % "retrofit" % "2.1.0",
   "be.objectify" %% "deadbolt-java" % "2.5.4",
   "org.hibernate" % "hibernate-validator-cdi" % "5.2.4.Final",
   "org.mockito" % "mockito-core" % "1.10.19" % "test",

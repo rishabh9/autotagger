@@ -1,11 +1,11 @@
 import filters.AccessLoggingFilter;
 import filters.RequestTimerFilter;
-import play.Environment;
-import play.Mode;
 import play.filters.cors.CORSFilter;
+import play.filters.csrf.CSRFFilter;
 import play.filters.gzip.GzipFilter;
-import play.http.HttpFilters;
-import play.mvc.EssentialFilter;
+import play.filters.headers.SecurityHeadersFilter;
+import play.filters.hosts.AllowedHostsFilter;
+import play.http.DefaultHttpFilters;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,47 +20,32 @@ import javax.inject.Singleton;
  * the <code>application.conf</code> configuration file.
  */
 @Singleton
-public class Filters implements HttpFilters {
-
-    private final Environment env;
-    private final EssentialFilter requestTimerFilter;
-    private final CORSFilter corsFilter;
-    private final GzipFilter gzipFilter;
-    private final AccessLoggingFilter accessLoggingFilter;
+public class Filters extends DefaultHttpFilters {
 
     /**
-     * @param env                 Basic environment settings for the current application.
      * @param requestTimerFilter  A Request Timer Filter
      * @param corsFilter          The CORS Filter
      * @param gzipFilter          The GZip Filter
      * @param accessLoggingFilter The Access Logging Filter
      */
     @Inject
-    public Filters(Environment env, RequestTimerFilter requestTimerFilter, CORSFilter corsFilter, GzipFilter gzipFilter,
-                   AccessLoggingFilter accessLoggingFilter) {
-        this.env = env;
-        this.requestTimerFilter = requestTimerFilter;
-        this.corsFilter = corsFilter;
-        this.gzipFilter = gzipFilter;
-        this.accessLoggingFilter = accessLoggingFilter;
+    public Filters(
+            AccessLoggingFilter accessLoggingFilter,
+            RequestTimerFilter requestTimerFilter,
+            CORSFilter corsFilter,
+            GzipFilter gzipFilter,
+            CSRFFilter csrfFilter,
+            AllowedHostsFilter allowedHostsFilter,
+            SecurityHeadersFilter securityHeadersFilter
+    ) {
+        super(
+                accessLoggingFilter,
+                requestTimerFilter,
+                corsFilter,
+                gzipFilter,
+                csrfFilter,
+                allowedHostsFilter,
+                securityHeadersFilter
+        );
     }
-
-    @Override
-    public EssentialFilter[] filters() {
-        // Use the request timer filter if we're running development mode.
-        if (env.mode().equals(Mode.DEV)) {
-            return new EssentialFilter[]{
-                    requestTimerFilter,
-                    corsFilter.asJava(),
-                    gzipFilter.asJava(),
-                    accessLoggingFilter.asJava()};
-        } else {
-            return new EssentialFilter[]{
-                    corsFilter.asJava(),
-                    gzipFilter.asJava(),
-                    accessLoggingFilter.asJava()
-            };
-        }
-    }
-
 }

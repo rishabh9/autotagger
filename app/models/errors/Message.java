@@ -1,27 +1,21 @@
-package models;
+package models.errors;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
-import java.util.Set;
-
 /**
  * @author rishabh
  */
 @Value.Immutable
-@JsonSerialize(as = ImmutableError.class)
-@JsonDeserialize(as = ImmutableError.class)
-public abstract class Error {
+@JsonSerialize(as = ImmutableMessage.class)
+@JsonDeserialize(as = ImmutableMessage.class)
+public abstract class Message {
 
-    @JsonProperty("code")
-    public abstract int code();
+    @JsonProperty("key")
+    public abstract String key();
 
     @JsonProperty("message")
     public abstract String message();
-
-    @JsonProperty("errors")
-    public abstract Set<Message> errors();
-
 }

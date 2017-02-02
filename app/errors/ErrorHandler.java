@@ -2,7 +2,8 @@ package errors;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import models.ImmutableError;
+import models.errors.Error;
+import models.errors.ImmutableError;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import play.Configuration;
 import play.Environment;
@@ -132,7 +133,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
     }
 
     private JsonNode toJson(int code, String message) {
-        models.Error error = ImmutableError.builder().code(code).message(message).build();
+        Error error = ImmutableError.builder().code(code).message(message).build();
         return Json.toJson(error);
     }
 }

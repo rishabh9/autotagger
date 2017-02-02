@@ -23,10 +23,19 @@ import javax.inject.Singleton;
 public class Filters extends DefaultHttpFilters {
 
     /**
-     * @param requestTimerFilter  A Request Timer Filter
-     * @param corsFilter          The CORS Filter
-     * @param gzipFilter          The GZip Filter
-     * @param accessLoggingFilter The Access Logging Filter
+     * @param requestTimerFilter    A Request Timer Filter
+     * @param corsFilter            The CORS Filter
+     * @param gzipFilter            The GZip Filter
+     * @param accessLoggingFilter   The Access Logging Filter
+     * @param csrfFilter            <a href='https://www.playframework.com/documentation/latest/ScalaCsrf'>
+     *                              The CSRF Filter
+     *                              </a>
+     * @param allowedHostsFilter    <a href='https://www.playframework.com/documentation/latest/AllowedHostsFilter'>
+     *                              The Allowed Hosts Filter
+     *                              </a>
+     * @param securityHeadersFilter <a href='https://www.playframework.com/documentation/latest/SecurityHeaders'>
+     *                              The Security Headers Filter
+     *                              </a>
      */
     @Inject
     public Filters(
